@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2196F3">
+    <title>JooyaCal Pro - نرم‌افزار کالیبراسیون پیشرفته</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .developer-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-top: 10px;
+        }
+
+        .developer-badge .dev-icon {
+            font-size: 1.2em;
+            margin-left: 5px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #dee2e6;
+            color: #6c757d;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .footer .copyright {
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .footer .version {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-box label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #495057;
+        }
+
+        .input-box input, .input-box textarea, .input-box select {
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-family: 'Courier New', monospace;
+        }
+
+        .input-box textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .input-box input:focus, .input-box textarea:focus, .input-box select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .method-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .method-btn {
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .method-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .method-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #138496;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+
+        #chart-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto !important;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e7f3ff;
+            border-radius: 10px;
+            border-right: 5px solid #2196F3;
+        }
+
+        .results h3 {
+            color: #2196F3;
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .predict-section {
+            background: #fff3cd;
+            border-right: 5px solid #ffc107;
+        }
+
+        .adjustment-section {
+            background: #d1ecf1;
+            border-right: 5px solid #17a2b8;
+        }
+
+        .batch-results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .batch-results-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .batch-results-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .batch-results-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .batch-results-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .help-text {
+            font-size: 0.9em;
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1000;
+        }
+
+        .install-prompt.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .input-group { grid-template-columns: 1fr; }
+            .method-selector { grid-template-columns: 1fr; }
+            .tab-container { flex-direction: column; }
+        }
+
+        .highlight-row {
+            background: #d4edda !important;
+            font-weight: bold;
+        }
+
+        .error-row {
+            background: #f8d7da !important;
+            color: #721c24;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border: 2px solid #bee5eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .info-box h4 {
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            margin-right: 20px;
+            color: #0c5460;
+        }
+
+        .calibrator-point {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .calibrator-point h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .adjusted-params {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .watermark {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(102, 126, 234, 0.9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 JooyaCal Pro</h1>
+            <p class="subtitle">سیستم پیشرفته کالیبراسیون منحنی با Cubic Spline و Segmented Calibration</p>
+            <div class="developer-badge">
+                <span class="dev-icon">👨‍⚕️</span>
+                <strong>Developed by Dr. Jooya</strong>
+                <span class="dev-icon">⚡</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- بخش انتخاب روش -->
+            <div class="section">
+                <div class="section-title">🎯 انتخاب روش برازش</div>
+                <div class="method-selector">
+                    <button class="method-btn active" onclick="selectMethod('point')">
+                        📍 Point-to-Point
+                    </button>
+                    <button class="method-btn" onclick="selectMethod('cubic')">
+                        🌊 Cubic Spline
+                    </button>
+                    <button class="method-btn" onclick="selectMethod('4pl')">
+                        📈 4PL (Standard)
+                    </button>
+                    <button class="method-btn" onclick="selectMethod('5pl')">
+                        📊 5PL (Standard)
+                    </button>
+                    <button class="method-btn" onclick="selectMethod('4pl-seg')">
+                        🔧 4PL (Segmented)
+                    </button>
+                    <button class="method-btn" onclick="selectMethod('5pl-seg')">
+                        🔧 5PL (Segmented)
+                    </button>
+                </div>
+
+                <div id="method-info" class="info-box" style="display: none;"></div>
+            </div>
+
+            <!-- بخش ورودی داده‌ها -->
+            <div class="section">
+                <div class="section-title">📝 ورود نقاط کالیبراسیون اولیه (حداقل 4 نقطه)</div>
+                <div id="data-inputs"></div>
+                <button class="btn btn-secondary" onclick="addDataPoint()">➕ افزودن نقطه</button>
+            </div>
+
+            <!-- دکمه‌های اصلی -->
+            <div style="text-align: center;">
+                <button class="btn btn-primary" onclick="fitCurve()">🚀 برازش منحنی اولیه</button>
+                <button class="btn btn-secondary" onclick="clearAll()">🗑️ پاک کردن</button>
+            </div>
+
+            <!-- نمودار -->
+            <div id="chart-container" style="display: none;">
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <!-- نتایج -->
+            <div id="results" style="display: none;"></div>
+
+            <!-- بخش تنظیم با دو نقطه کالیبراتور (فقط برای Segmented) -->
+            <div class="section adjustment-section" id="adjustment-section" style="display: none;">
+                <div class="section-title">🔧 تنظیم منحنی با دو نقطه کالیبراتور</div>
+                
+                <div class="info-box">
+                    <h4>📖 راهنما:</h4>
+                    <ul>
+                        <li>دو نقطه از منحنی اولیه را انتخاب کنید (یکی پایین و یکی بالا)</li>
+                        <li>سیگنال واقعی (اندازه‌گیری شده) این دو نقطه را وارد کنید</li>
+                        <li>منحنی بر اساس این دو نقطه تنظیم (Adjust) می‌شود</li>
+                    </ul>
+                </div>
+
+                <div class="calibrator-point">
+                    <h4>📍 نقطه کالیبراتور 1 (پایین‌تر):</h4>
+                    <div class="input-group">
+                        <div class="input-box">
+                            <label>غلظت شناخته شده:</label>
+                            <input type="number" id="cal1-conc" step="any" placeholder="مثال: 10">
+                        </div>
+                        <div class="input-box">
+                            <label>سیگنال اندازه‌گیری شده:</label>
+                            <input type="number" id="cal1-signal" step="any" placeholder="مثال: 0.5">
+                        </div>
+                        <div class="input-box">
+                            <label>سیگنال پیش‌بینی شده (از منحنی اولیه):</label>
+                            <input type="number" id="cal1-predicted" disabled>
+                        </div>
+                    </div>
+                    <button class="btn btn-info" onclick="calculatePredicted(1)">🔍 محاسبه سیگنال پیش‌بینی</button>
+                </div>
+
+                <div class="calibrator-point">
+                    <h4>📍 نقطه کالیبراتور 2 (بالاتر):</h4>
+                    <div class="input-group">
+                        <div class="input-box">
+                            <label>غلظت شناخته شده:</label>
+                            <input type="number" id="cal2-conc" step="any" placeholder="مثال: 100">
+                        </div>
+                        <div class="input-box">
+                            <label>سیگنال اندازه‌گیری شده:</label>
+                            <input type="number" id="cal2-signal" step="any" placeholder="مثال: 2.0">
+                        </div>
+                        <div class="input-box">
+                            <label>سیگنال پیش‌بینی شده (از منحنی اولیه):</label>
+                            <input type="number" id="cal2-predicted" disabled>
+                        </div>
+                    </div>
+                    <button class="btn btn-info" onclick="calculatePredicted(2)">🔍 محاسبه سیگنال پیش‌بینی</button>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-warning" onclick="adjustCurve()">⚙️ تنظیم منحنی با این دو نقطه</button>
+                </div>
+
+                <div id="adjusted-results" style="display: none;"></div>
+            </div>
+
+            <!-- بخش پیش‌بینی با Tab ها -->
+            <div class="section predict-section" id="predict-section" style="display: none;">
+                <div class="section-title">🔮 محاسبه غلظت از سیگنال</div>
+                
+                <!-- Tab Navigation -->
+                <div class="tab-container">
+                    <button class="tab-btn active" onclick="switchTab('single')">
+                        🔢 محاسبه تک‌ نمونه
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('batch')">
+                        📊 محاسبه دسته‌ای (چند نمونه)
+                    </button>
+                </div>
+
+                <!-- Tab 1: Single Prediction -->
+                <div id="single-tab" class="tab-content active">
+                    <div class="input-group">
+                        <div class="input-box">
+                            <label>سیگنال جدید:</label>
+                            <input type="number" id="new-signal" step="any" placeholder="مثال: 0.5">
+                        </div>
+                    </div>
+                    <button class="btn btn-success" onclick="predictSingle()">💡 محاسبه غلظت</button>
+                    <div id="predict-result"></div>
+                </div>
+
+                <!-- Tab 2: Batch Prediction -->
+                <div id="batch-tab" class="tab-content">
+                    <div class="input-box">
+                        <label>سیگنال‌های جدید (هر خط یک مقدار):</label>
+                        <textarea id="batch-signals" placeholder="مثال:
+0.1
+0.25
+0.5
+0.75
+1.0
+1.5
+2.0
+
+یا با کاما جدا شده:
+0.1, 0.25, 0.5, 0.75, 1.0
+
+یا با فاصله:
+0.1 0.25 0.5 0.75 1.0"></textarea>
+                        <div class="help-text">💡 می‌توانید مقادیر را با Enter، کاما (,) یا فاصله جدا کنید</div>
+                    </div>
+                    <button class="btn btn-success" onclick="predictBatch()">🚀 محاسبه همه نمونه‌ها</button>
+                    
+                    <div id="batch-result"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <span class="copyright">© 2025 <strong>Dr. Jooya</strong> - All Rights Reserved</span>
+                <span class="version">v2.0 Pro</span>
+            </div>
+            <div style="margin-top: 10px; font-size: 0.9em;">
+                🧬 Advanced Calibration Curve Software | 
+                📧 Contact: <strong>dr.jooya@example.com</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Watermark -->
+    <div class="watermark">
+        ⚡ JooyaCal by Dr. Jooya
+    </div>
+
+    <!-- پیام نصب PWA -->
+    <div class="install-prompt" id="install-prompt">
+        <h3>📱 نصب برنامه</h3>
+        <p>می‌توانید این برنامه را روی دسکتاپ یا موبایل خود نصب کنید</p>
+        <button class="btn btn-primary" onclick="installApp()">نصب</button>
+        <button class="btn btn-secondary" onclick="dismissInstall()">بعداً</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let currentMethod = 'point';
+        let dataPoints = [];
+        let chart = null;
+        let fittedParams = null;
+        let adjustedParams = null;
+        let splineCoefficients = null;
+        let deferredPrompt;
+        let isAdjusted = false;
+
+        // توضیحات روش‌ها
+        const methodDescriptions = {
+            'point': {
+                title: '📍 Point-to-Point (درون‌یابی خطی)',
+                desc: 'اتصال مستقیم نقاط با خطوط مستقیم - ساده و سریع'
+            },
+            'cubic': {
+                title: '🌊 Cubic Spline',
+                desc: 'منحنی هموار و پیوسته با چندجمله‌ای‌های درجه 3 - دقیق‌ترین روش درون‌یابی'
+            },
+            '4pl': {
+                title: '📈 4-Parameter Logistic (استاندارد)',
+                desc: 'مدل سیگموئیدی با 4 پارامتر - مناسب برای اکثر تست‌های ایمونواسی'
+            },
+            '5pl': {
+                title: '📊 5-Parameter Logistic (استاندارد)',
+                desc: 'مدل سیگموئیدی نامتقارن با 5 پارامتر - دقت بالاتر برای منحنی‌های پیچیده'
+            },
+            '4pl-seg': {
+                title: '🔧 4PL Segmented (قابل تنظیم)',
+                desc: 'مدل 4PL که با دو نقطه کالیبراتور قابل تنظیم است - برای روتین روزانه'
+            },
+            '5pl-seg': {
+                title: '🔧 5PL Segmented (قابل تنظیم)',
+                desc: 'مدل 5PL که با دو نقطه کالیبراتور قابل تنظیم است - دقت بالا + انعطاف‌پذیری'
+            }
+        };
+
+        // PWA Installation
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('install-prompt').classList.add('show');
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                    dismissInstall();
+                });
+            }
+        }
+
+        function dismissInstall() {
+            document.getElementById('install-prompt').classList.remove('show');
+        }
+
+        // Switch between tabs
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+
+        // انتخاب روش
+        function selectMethod(method) {
+            currentMethod = method;
+            document.querySelectorAll('.method-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // نمایش توضیحات
+            const info = methodDescriptions[method];
+            const infoBox = document.getElementById('method-info');
+            infoBox.innerHTML = `<h4>${info.title}</h4><p>${info.desc}</p>`;
+            infoBox.style.display = 'block';
+
+            // مخفی کردن بخش adjustment اگر روش segmented نیست
+            if (method.includes('-seg')) {
+                // نمایش بخش adjustment در صورت وجود منحنی
+                if (fittedParams) {
+                    document.getElementById('adjustment-section').style.display = 'block';
+                }
+            } else {
+                document.getElementById('adjustment-section').style.display = 'none';
+            }
+        }
+
+        // افزودن نقطه داده
+        function addDataPoint() {
+            const container = document.getElementById('data-inputs');
+            const index = container.children.length;
+            
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'input-group';
+            inputGroup.innerHTML = `
+                <div class="input-box">
+                    <label>غلظت ${index + 1}:</label>
+                    <input type="number" class="conc-input" step="any" placeholder="مثال: 10">
+                </div>
+                <div class="input-box">
+                    <label>سیگنال ${index + 1}:</label>
+                    <input type="number" class="signal-input" step="any" placeholder="مثال: 0.5">
+                </div>
+            `;
+            container.appendChild(inputGroup);
+        }
+
+        // مقداردهی اولیه - تغییر از 6 به 4
+        for (let i = 0; i < 4; i++) {
+            addDataPoint();
+        }
+
+        // جمع‌آوری داده‌ها - تغییر حداقل از 6 به 4
+        function collectData() {
+            const concInputs = document.querySelectorAll('.conc-input');
+            const signalInputs = document.querySelectorAll('.signal-input');
+            
+            dataPoints = [];
+            for (let i = 0; i < concInputs.length; i++) {
+                const conc = parseFloat(concInputs[i].value);
+                const signal = parseFloat(signalInputs[i].value);
+                
+                if (!isNaN(conc) && !isNaN(signal)) {
+                    dataPoints.push({ x: conc, y: signal });
+                }
+            }
+            
+            dataPoints.sort((a, b) => a.x - b.x);
+            return dataPoints.length >= 4;
+        }
+
+        // ========== توابع ریاضی ==========
+
+        // توابع 4PL و 5PL
+        function pl4(x, a, b, c, d) {
+            return d + (a - d) / (1 + Math.pow(x / c, b));
+        }
+
+        function pl5(x, a, b, c, d, g) {
+            return d + (a - d) / Math.pow(1 + Math.pow(x / c, b), g);
+        }
+
+        // ========== Cubic Spline Implementation ==========
+        
+        function computeCubicSpline(xData, yData) {
+            const n = xData.length - 1;
+            const h = [];
+            const alpha = [];
+            
+            // محاسبه h
+            for (let i = 0; i < n; i++) {
+                h[i] = xData[i + 1] - xData[i];
+            }
+            
+            // محاسبه alpha
+            for (let i = 1; i < n; i++) {
+                alpha[i] = (3 / h[i]) * (yData[i + 1] - yData[i]) - 
+                           (3 / h[i - 1]) * (yData[i] - yData[i - 1]);
+            }
+            
+            // حل سیستم سه قطری برای c
+            const l = [1];
+            const mu = [0];
+            const z = [0];
+            
+            for (let i = 1; i < n; i++) {
+                l[i] = 2 * (xData[i + 1] - xData[i - 1]) - h[i - 1] * mu[i - 1];
+                mu[i] = h[i] / l[i];
+                z[i] = (alpha[i] - h[i - 1] * z[i - 1]) / l[i];
+            }
+            
+            const c = new Array(n + 1).fill(0);
+            const b = new Array(n);
+            const d = new Array(n);
+            
+            l[n] = 1;
+            z[n] = 0;
+            c[n] = 0;
+            
+            for (let j = n - 1; j >= 0; j--) {
+                c[j] = z[j] - mu[j] * c[j + 1];
+                b[j] = (yData[j + 1] - yData[j]) / h[j] - h[j] * (c[j + 1] + 2 * c[j]) / 3;
+                d[j] = (c[j + 1] - c[j]) / (3 * h[j]);
+            }
+            
+            return {
+                x: xData,
+                a: yData,
+                b: b,
+                c: c,
+                d: d
+            };
+        }
+        
+        function evaluateSpline(x, spline) {
+            const n = spline.x.length - 1;
+            
+            // پیدا کردن بازه مناسب
+            let i = 0;
+            if (x < spline.x[0]) {
+                // برون‌یابی خطی در سمت چپ
+                const slope = spline.b[0];
+                return spline.a[0] + slope * (x - spline.x[0]);
+            }
+            if (x > spline.x[n]) {
+                // برون‌یابی خطی در سمت راست
+                const slope = spline.b[n - 1] + 2 * spline.c[n - 1] * (spline.x[n] - spline.x[n - 1]) + 
+                              3 * spline.d[n - 1] * Math.pow(spline.x[n] - spline.x[n - 1], 2);
+                return spline.a[n] + slope * (x - spline.x[n]);
+            }
+            
+            for (i = 0; i < n; i++) {
+                if (x >= spline.x[i] && x <= spline.x[i + 1]) {
+                    break;
+                }
+            }
+            
+            const dx = x - spline.x[i];
+            return spline.a[i] + spline.b[i] * dx + spline.c[i] * dx * dx + spline.d[i] * dx * dx * dx;
+        }
+
+        // الگوریتم Levenberg-Marquardt
+        function fitCurveLM(xData, yData, func, initialParams) {
+            let params = [...initialParams];
+            const maxIter = 1000;
+            const tolerance = 1e-8;
+            let lambda = 0.01;
+
+            for (let iter = 0; iter < maxIter; iter++) {
+                const residuals = xData.map((x, i) => yData[i] - func(x, ...params));
+                const rss = residuals.reduce((sum, r) => sum + r * r, 0);
+
+                const jacobian = computeJacobian(xData, params, func);
+                const JtJ = multiplyMatrices(transpose(jacobian), jacobian);
+                const Jtr = multiplyMatrixVector(transpose(jacobian), residuals);
+
+                for (let i = 0; i < JtJ.length; i++) {
+                    JtJ[i][i] *= (1 + lambda);
+                }
+
+                const delta = solveLinearSystem(JtJ, Jtr);
+                const newParams = params.map((p, i) => p + delta[i]);
+
+                const newResiduals = xData.map((x, i) => yData[i] - func(x, ...newParams));
+                const newRss = newResiduals.reduce((sum, r) => sum + r * r, 0);
+
+                if (newRss < rss) {
+                    params = newParams;
+                    lambda /= 10;
+                    if (Math.abs(rss - newRss) < tolerance) break;
+                } else {
+                    lambda *= 10;
+                }
+            }
+
+            return params;
+        }
+
+        function computeJacobian(xData, params, func) {
+            const eps = 1e-8;
+            const jacobian = [];
+
+            for (let i = 0; i < xData.length; i++) {
+                const row = [];
+                for (let j = 0; j < params.length; j++) {
+                    const p1 = [...params];
+                    const p2 = [...params];
+                    p1[j] -= eps;
+                    p2[j] += eps;
+                    const derivative = (func(xData[i], ...p2) - func(xData[i], ...p1)) / (2 * eps);
+                    row.push(derivative);
+                }
+                jacobian.push(row);
+            }
+
+            return jacobian;
+        }
+
+        function transpose(matrix) {
+            return matrix[0].map((_, i) => matrix.map(row => row[i]));
+        }
+
+        function multiplyMatrices(a, b) {
+            const result = [];
+            for (let i = 0; i < a.length; i++) {
+                result[i] = [];
+                for (let j = 0; j < b[0].length; j++) {
+                    let sum = 0;
+                    for (let k = 0; k < a[0].length; k++) {
+                        sum += a[i][k] * b[k][j];
+                    }
+                    result[i][j] = sum;
+                }
+            }
+            return result;
+        }
+
+        function multiplyMatrixVector(matrix, vector) {
+            return matrix.map(row => 
+                row.reduce((sum, val, i) => sum + val * vector[i], 0)
+            );
+        }
+
+        function solveLinearSystem(A, b) {
+            const n = A.length;
+            const augmented = A.map((row, i) => [...row, b[i]]);
+
+            for (let i = 0; i < n; i++) {
+                let maxRow = i;
+                for (let k = i + 1; k < n; k++) {
+                    if (Math.abs(augmented[k][i]) > Math.abs(augmented[maxRow][i])) {
+                        maxRow = k;
+                    }
+                }
+                [augmented[i], augmented[maxRow]] = [augmented[maxRow], augmented[i]];
+
+                for (let k = i + 1; k < n; k++) {
+                    const factor = augmented[k][i] / augmented[i][i];
+                    for (let j = i; j <= n; j++) {
+                        augmented[k][j] -= factor * augmented[i][j];
+                    }
+                }
+            }
+
+            const x = new Array(n);
+            for (let i = n - 1; i >= 0; i--) {
+                x[i] = augmented[i][n];
+                for (let j = i + 1; j < n; j++) {
+                    x[i] -= augmented[i][j] * x[j];
+                }
+                x[i] /= augmented[i][i];
+            }
+
+            return x;
+        }
+
+        // ========== برازش منحنی اولیه ==========
+        
+        function fitCurve() {
+            if (!collectData()) {
+                alert('⚠️ حداقل 4 نقطه داده لازم است!');
+                return;
+            }
+
+            const xData = dataPoints.map(p => p.x);
+            const yData = dataPoints.map(p => p.y);
+
+            let curveData = [];
+            let resultsHTML = '<div class="results"><h3>📊 نتایج برازش منحنی اولیه</h3>';
+
+            isAdjusted = false;
+            adjustedParams = null;
+
+            if (currentMethod === 'point') {
+                const minX = Math.min(...xData);
+                const maxX = Math.max(...xData);
+                
+                for (let x = minX; x <= maxX; x += (maxX - minX) / 100) {
+                    let y = 0;
+                    for (let i = 0; i < xData.length - 1; i++) {
+                        if (x >= xData[i] && x <= xData[i + 1]) {
+                            const t = (x - xData[i]) / (xData[i + 1] - xData[i]);
+                            y = yData[i] + t * (yData[i + 1] - yData[i]);
+                            break;
+                        }
+                    }
+                    curveData.push({ x, y });
+                }
+
+                resultsHTML += '<div class="result-item">✅ روش: درون‌یابی خطی Point-to-Point</div>';
+
+            } else if (currentMethod === 'cubic') {
+                splineCoefficients = computeCubicSpline(xData, yData);
+                
+                const minX = Math.min(...xData);
+                const maxX = Math.max(...xData);
+                
+                for (let x = minX; x <= maxX; x += (maxX - minX) / 200) {
+                    const y = evaluateSpline(x, splineCoefficients);
+                    curveData.push({ x, y });
+                }
+
+                resultsHTML += '<div class="result-item">✅ روش: Cubic Spline (چندجمله‌ای درجه 3)</div>';
+                resultsHTML += `<div class="result-item">📈 تعداد بازه‌های spline: ${xData.length - 1}</div>`;
+
+            } else if (currentMethod === '4pl' || currentMethod === '4pl-seg') {
+                const minY = Math.min(...yData);
+                const maxY = Math.max(...yData);
+                const midX = xData[Math.floor(xData.length / 2)];
+                
+                const initialParams = [maxY, 1, midX, minY];
+                fittedParams = fitCurveLM(xData, yData, pl4, initialParams);
+
+                const minX = Math.min(...xData) * 0.5;
+                const maxX = Math.max(...xData) * 1.5;
+
+                for (let x = minX; x <= maxX; x += (maxX - minX) / 200) {
+                    const y = pl4(x, ...fittedParams);
+                    curveData.push({ x, y });
+                }
+
+                const mode = currentMethod === '4pl-seg' ? 'Segmented (قابل تنظیم)' : 'Standard';
+                resultsHTML += `<div class="result-item">✅ روش: 4-Parameter Logistic (4PL) - ${mode}</div>`;
+                resultsHTML += `<div class="result-item">📈 پارامترهای اولیه:</div>`;
+                resultsHTML += `<div class="result-item">• A (حداکثر) = ${fittedParams[0].toFixed(6)}</div>`;
+                resultsHTML += `<div class="result-item">• B (شیب) = ${fittedParams[1].toFixed(6)}</div>`;
+                resultsHTML += `<div class="result-item">• C (نقطه عطف) = ${fittedParams[2].toFixed(6)}</div>`;
+                resultsHTML += `<div class="result-item">• D (حداقل) = ${fittedParams[3].toFixed(6)}</div>`;
+                
+                resultsHTML += `<div class="result-item">📐 معادله: $Y = D + \\frac{A - D}{1 + (\\frac{X}{C})^B}$</div>`;
+
+            } else if (currentMethod === '5pl' || currentMethod === '5pl-seg') {
+                const minY = Math.min(...yData);
+                const maxY = Math.max(...yData);
+                const midX = xData[Math.floor(xData.length / 2)];
+                
+                const initialParams = [maxY, 1, midX, minY, 1];
+                fittedParams = fitCurveLM(xData, yData, pl5, initialParams);
+
+                const minX = Math.min(...xData) * 0.5;
+                const maxX = Math.max(...xData) * 1.5;
+
+                for (let x = minX; x <= maxX; x += (maxX - minX) / 200) {
+                    const y = pl5(x, ...fittedParams);
+                    curveData.push({ x, y });
+                }
+
+                const mode = currentMethod === '5pl-seg' ? 'Segmented (قابل تنظیم)' : 'Standard';
+                resultsHTML += `<div class="result-item">✅ روش: 5-Parameter Logistic (5PL) - ${mode}</div>`;
+                resultsHTML += `<div class="result-item">📈 پارامترهای اولیه:</div>`;
+                resultsHTML += `<div class="result-item">• A (حداکثر) = ${fittedParams[0].toFixed(6)}</div>`;
+                resultsHTML += `<div class="result-item">• B (شیب) = ${fittedParams[1].toFixed(6)}</div>`;
+                resultsHTML += `<div class="result-item">• C (نقطه عطف) = ${fittedParams[2].toFixed(6)}</div>`;
+                resultsHTML += `<div class="result-item">• D (حداقل) = ${fittedParams[3].toFixed(6)}</div>`;
+                resultsHTML += `<div class="result-item">• G (نامتقارنی) = ${fittedParams[4].toFixed(6)}</div>`;
+                
+                resultsHTML += `<div class="result-item">📐 معادله: $Y = D + \\frac{A - D}{(1 + (\\frac{X}{C})^B)^G}$</div>`;
+            }
+
+            resultsHTML += '</div>';
+
+            drawChart(curveData);
+
+            document.getElementById('results').innerHTML = resultsHTML;
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('predict-section').style.display = 'block';
+
+            // نمایش بخش adjustment برای روش‌های segmented
+            if (currentMethod.includes('-seg')) {
+                document.getElementById('adjustment-section').style.display = 'block';
+            }
+
+            // رندر MathJax اگر موجود باشد
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        // ========== محاسبه سیگنال پیش‌بینی شده برای نقاط کالیبراتور ==========
+        
+        function calculatePredicted(pointNum) {
+            const conc = parseFloat(document.getElementById(`cal${pointNum}-conc`).value);
+            
+            if (isNaN(conc)) {
+                alert('⚠️ لطفاً ابتدا غلظت را وارد کنید!');
+                return;
+            }
+
+            if (!fittedParams && !splineCoefficients) {
+                alert('⚠️ ابتدا باید منحنی اولیه را برازش دهید!');
+                return;
+            }
+
+            let predictedSignal;
+
+            if (currentMethod === '4pl-seg') {
+                predictedSignal = pl4(conc, ...fittedParams);
+            } else if (currentMethod === '5pl-seg') {
+                predictedSignal = pl5(conc, ...fittedParams);
+            }
+
+            document.getElementById(`cal${pointNum}-predicted`).value = predictedSignal.toFixed(6);
+        }
+
+        // ========== تنظیم منحنی با دو نقطه کالیبراتور ==========
+        
+        function adjustCurve() {
+            const cal1Conc = parseFloat(document.getElementById('cal1-conc').value);
+            const cal1Signal = parseFloat(document.getElementById('cal1-signal').value);
+            const cal1Predicted = parseFloat(document.getElementById('cal1-predicted').value);
+            
+            const cal2Conc = parseFloat(document.getElementById('cal2-conc').value);
+            const cal2Signal = parseFloat(document.getElementById('cal2-signal').value);
+            const cal2Predicted = parseFloat(document.getElementById('cal2-predicted').value);
+
+            if (isNaN(cal1Conc) || isNaN(cal1Signal) || isNaN(cal2Conc) || isNaN(cal2Signal)) {
+                alert('⚠️ لطفاً تمام مقادیر را وارد کنید!');
+                return;
+            }
+
+            if (isNaN(cal1Predicted) || isNaN(cal2Predicted)) {
+                alert('⚠️ ابتدا باید سیگنال‌های پیش‌بینی شده را محاسبه کنید!');
+                return;
+            }
+
+            // محاسبه Shift و Scale
+            // Signal_measured = Scale * Signal_predicted + Shift
+            
+            const shift = ((cal1Signal * cal2Predicted) - (cal2Signal * cal1Predicted)) / (cal2Predicted - cal1Predicted);
+            const scale = (cal2Signal - cal1Signal) / (cal2Predicted - cal1Predicted);
+
+            // تنظیم پارامترها
+            if (currentMethod === '4pl-seg') {
+                // برای 4PL: Signal = D + (A-D) / (1 + (X/C)^B)
+                // Signal_new = Scale * Signal_old + Shift
+                // D_new = Scale * D + Shift
+                // A_new = Scale * A + Shift
+                
+                adjustedParams = [
+                    fittedParams[0] * scale + shift,  // A
+                    fittedParams[1],                  // B (بدون تغییر)
+                    fittedParams[2],                  // C (بدون تغییر)
+                    fittedParams[3] * scale + shift   // D
+                ];
+
+            } else if (currentMethod === '5pl-seg') {
+                adjustedParams = [
+                    fittedParams[0] * scale + shift,  // A
+                    fittedParams[1],                  // B (بدون تغییر)
+                    fittedParams[2],                  // C (بدون تغییر)
+                    fittedParams[3] * scale + shift,  // D
+                    fittedParams[4]                   // G (بدون تغییر)
+                ];
+            }
+
+            isAdjusted = true;
+
+            // نمایش نتایج تنظیم
+            let html = '<div class="adjusted-params">';
+            html += '<h3>✅ منحنی با موفقیت تنظیم شد</h3>';
+            html += `<div class="result-item"><strong>📊 ضرایب تنظیم:</strong></div>`;
+            html += `<div class="result-item">• Scale Factor: ${scale.toFixed(6)}</div>`;
+            html += `<div class="result-item">• Shift: ${shift.toFixed(6)}</div>`;
+            html += `<div class="result-item">• معادله: Signal_new = ${scale.toFixed(4)} × Signal_old + ${shift.toFixed(4)}</div>`;
+            html += '<br>';
+            html += `<div class="result-item"><strong>📈 پارامترهای تنظیم شده:</strong></div>`;
+            html += `<div class="result-item">• A (حداکثر) = ${adjustedParams[0].toFixed(6)}</div>`;
+            html += `<div class="result-item">• B (شیب) = ${adjustedParams[1].toFixed(6)}</div>`;
+            html += `<div class="result-item">• C (نقطه عطف) = ${adjustedParams[2].toFixed(6)}</div>`;
+            html += `<div class="result-item">• D (حداقل) = ${adjustedParams[3].toFixed(6)}</div>`;
+            
+            if (currentMethod === '5pl-seg') {
+                html += `<div class="result-item">• G (نامتقارنی) = ${adjustedParams[4].toFixed(6)}</div>`;
+            }
+            
+            html += '</div>';
+
+            document.getElementById('adjusted-results').innerHTML = html;
+            document.getElementById('adjusted-results').style.display = 'block';
+
+            // ترسیم مجدد نمودار با منحنی تنظیم شده
+            redrawWithAdjustedCurve();
+        }
+
+        function redrawWithAdjustedCurve() {
+            const xData = dataPoints.map(p => p.x);
+            const minX = Math.min(...xData) * 0.5;
+            const maxX = Math.max(...xData) * 1.5;
+
+            const adjustedCurveData = [];
+            
+            for (let x = minX; x <= maxX; x += (maxX - minX) / 200) {
+                let y;
+                if (currentMethod === '4pl-seg') {
+                    y = pl4(x, ...adjustedParams);
+                } else if (currentMethod === '5pl-seg') {
+                    y = pl5(x, ...adjustedParams);
+                }
+                adjustedCurveData.push({ x, y });
+            }
+
+            // نمودار با دو منحنی
+            const ctx = document.getElementById('myChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'نقاط کالیبراسیون اولیه',
+                            data: dataPoints,
+                            backgroundColor: 'rgba(255, 99, 132, 0.8)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            pointRadius: 8,
+                            pointHoverRadius: 10
+                        },
+                        {
+                            label: 'منحنی اولیه',
+                            data: getCurrentCurveData(),
+                            borderColor: 'rgba(54, 162, 235, 0.5)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                            showLine: true,
+                            pointRadius: 0,
+                            borderWidth: 2,
+                            borderDash: [5, 5]
+                        },
+                        {
+                            label: 'منحنی تنظیم شده (Adjusted)',
+                            data: adjustedCurveData,
+                            borderColor: 'rgba(40, 167, 69, 1)',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            showLine: true,
+                            pointRadius: 0,
+                            borderWidth: 3
+                        },
+                        {
+                            label: 'نقاط کالیبراتور',
+                            data: [
+                                { 
+                                    x: parseFloat(document.getElementById('cal1-conc').value), 
+                                    y: parseFloat(document.getElementById('cal1-signal').value) 
+                                },
+                                { 
+                                    x: parseFloat(document.getElementById('cal2-conc').value), 
+                                    y: parseFloat(document.getElementById('cal2-signal').value) 
+                                }
+                            ],
+                            backgroundColor: 'rgba(255, 193, 7, 1)',
+                            borderColor: 'rgba(255, 193, 7, 1)',
+                            pointRadius: 12,
+                            pointStyle: 'star',
+                            pointHoverRadius: 15
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: 2,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'JooyaCal Pro - منحنی کالیبراسیون (اولیه و تنظیم شده)',
+                            font: { size: 18 }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'غلظت (Concentration)',
+                                font: { size: 14 }
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'سیگنال (Signal)',
+                                font: { size: 14 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function getCurrentCurveData() {
+            const xData = dataPoints.map(p => p.x);
+            const minX = Math.min(...xData) * 0.5;
+            const maxX = Math.max(...xData) * 1.5;
+            const curveData = [];
+
+            for (let x = minX; x <= maxX; x += (maxX - minX) / 200) {
+                let y;
+                if (currentMethod === '4pl-seg') {
+                    y = pl4(x, ...fittedParams);
+                } else if (currentMethod === '5pl-seg') {
+                    y = pl5(x, ...fittedParams);
+                }
+                curveData.push({ x, y });
+            }
+
+            return curveData;
+        }
+
+        // رسم نمودار
+        function drawChart(curveData) {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'نقاط واقعی',
+                            data: dataPoints,
+                            backgroundColor: 'rgba(255, 99, 132, 0.8)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            pointRadius: 8,
+                            pointHoverRadius: 10
+                        },
+                        {
+                            label: 'منحنی برازش شده',
+                            data: curveData,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                            showLine: true,
+                            pointRadius: 0,
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: 2,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'JooyaCal Pro - منحنی کالیبراسیون',
+                            font: { size: 18 }
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'غلظت (Concentration)',
+                                font: { size: 14 }
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'سیگنال (Signal)',
+                                font: { size: 14 }
+                            }
+                        }
+                    }
+                }
+            });
+
+            document.getElementById('chart-container').style.display = 'block';
+        }
+
+        // ========== محاسبه غلظت ==========
+        
+        function calculateConcentration(signal) {
+            // استفاده از منحنی تنظیم شده اگر موجود باشد
+            const useAdjusted = isAdjusted && adjustedParams;
+            
+            if (currentMethod === 'point') {
+                const xData = dataPoints.map(p => p.x);
+                const yData = dataPoints.map(p => p.y);
+
+                for (let i = 0; i < yData.length - 1; i++) {
+                    if ((signal >= yData[i] && signal <= yData[i + 1]) ||
+                        (signal <= yData[i] && signal >= yData[i + 1])) {
+                        const t = (signal - yData[i]) / (yData[i + 1] - yData[i]);
+                        return xData[i] + t * (xData[i + 1] - xData[i]);
+                    }
+                }
+
+            } else if (currentMethod === 'cubic') {
+                if (!splineCoefficients) return null;
+                
+                // حل عددی معکوس spline
+                return solveSplineInverse(signal, splineCoefficients);
+
+            } else if (currentMethod === '4pl' || currentMethod === '4pl-seg') {
+                const params = useAdjusted ? adjustedParams : fittedParams;
+                if (!params) return null;
+                return solvePL(signal, params, pl4);
+
+            } else if (currentMethod === '5pl' || currentMethod === '5pl-seg') {
+                const params = useAdjusted ? adjustedParams : fittedParams;
+                if (!params) return null;
+                return solvePL(signal, params, pl5);
+            }
+
+            return null;
+        }
+
+        function solveSplineInverse(targetY, spline) {
+            const xData = dataPoints.map(p => p.x);
+            let left = Math.min(...xData) * 0.1;
+            let right = Math.max(...xData) * 10;
+
+            const tolerance = 1e-8;
+            const maxIter = 100;
+
+            for (let i = 0; i < maxIter; i++) {
+                const mid = (left + right) / 2;
+                const yMid = evaluateSpline(mid, spline);
+
+                if (Math.abs(yMid - targetY) < tolerance) {
+                    return mid;
+                }
+
+                const yLeft = evaluateSpline(left, spline);
+                if ((yLeft - targetY) * (yMid - targetY) < 0) {
+                    right = mid;
+                } else {
+                    left = mid;
+                }
+
+                if (Math.abs(right - left) < tolerance) {
+                    return (left + right) / 2;
+                }
+            }
+
+            return (left + right) / 2;
+        }
+
+        // پیش‌بینی تک نمونه
+        function predictSingle() {
+            const signal = parseFloat(document.getElementById('new-signal').value);
+            
+            if (isNaN(signal)) {
+                alert('⚠️ لطفاً مقدار سیگنال را وارد کنید!');
+                return;
+            }
+
+            const concentration = calculateConcentration(signal);
+
+            const resultDiv = document.getElementById('predict-result');
+            if (concentration !== null) {
+                let curveType = 'اولیه';
+                if (isAdjusted && adjustedParams) {
+                    curveType = 'تنظیم شده (Adjusted)';
+                }
+                
+                resultDiv.innerHTML = `
+                    <div class="results" style="margin-top: 20px;">
+                        <h3>✅ نتیجه محاسبه</h3>
+                        <div class="result-item">منحنی مورد استفاده: <strong>${curveType}</strong></div>
+                        <div class="result-item" style="font-size: 1.2em; background: #d4edda; color: #155724;">
+                            سیگنال: <strong>${signal.toFixed(6)}</strong> ← غلظت: <strong>${concentration.toFixed(6)}</strong>
+                        </div>
+                    </div>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <div class="results" style="margin-top: 20px; background: #f8d7da; border-color: #dc3545;">
+                        <h3>❌ خطا</h3>
+                        <div class="result-item">سیگنال خارج از محدوده است!</div>
+                    </div>
+                `;
+            }
+        }
+
+        // پیش‌بینی دسته‌ای
+        function predictBatch() {
+            const input = document.getElementById('batch-signals').value.trim();
+            
+            if (!input) {
+                alert('⚠️ لطفاً سیگنال‌ها را وارد کنید!');
+                return;
+            }
+
+            let signals = input
+                .split(/[\n,\s]+/)
+                .map(s => parseFloat(s.trim()))
+                .filter(s => !isNaN(s));
+
+            if (signals.length === 0) {
+                alert('⚠️ هیچ مقدار معتبری یافت نشد!');
+                return;
+            }
+
+            const results = signals.map((signal, index) => {
+                const concentration = calculateConcentration(signal);
+                return {
+                    index: index + 1,
+                    signal: signal,
+                    concentration: concentration,
+                    valid: concentration !== null
+                };
+            });
+
+            displayBatchResults(results);
+        }
+
+        function displayBatchResults(results) {
+            const validResults = results.filter(r => r.valid);
+            const invalidResults = results.filter(r => !r.valid);
+
+            let curveType = 'اولیه';
+            if (isAdjusted && adjustedParams) {
+                curveType = 'تنظیم شده (Adjusted)';
+            }
+
+            let html = '<div class="results" style="margin-top: 20px;">';
+            html += '<h3>📊 نتایج محاسبات دسته‌ای</h3>';
+            html += `<p style="margin-bottom: 10px;"><strong>منحنی مورد استفاده:</strong> ${curveType}</p>`;
+            html += `<p style="margin-bottom: 15px;">تعداد کل: ${results.length} | موفق: ${validResults.length} | ناموفق: ${invalidResults.length}</p>`;
+
+            html += '<table class="batch-results-table">';
+            html += '<thead><tr>';
+            html += '<th style="width: 80px;">ردیف</th>';
+            html += '<th>سیگنال (Signal)</th>';
+            html += '<th>غلظت (Concentration)</th>';
+            html += '<th>وضعیت</th>';
+            html += '</tr></thead>';
+            html += '<tbody>';
+
+            results.forEach(result => {
+                const rowClass = result.valid ? 'highlight-row' : 'error-row';
+                html += `<tr class="${rowClass}">`;
+                html += `<td>${result.index}</td>`;
+                html += `<td>${result.signal.toFixed(6)}</td>`;
+                html += `<td>${result.valid ? result.concentration.toFixed(6) : '---'}</td>`;
+                html += `<td>${result.valid ? '✅ موفق' : '❌ خارج از محدوده'}</td>`;
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+
+            html += '<div class="export-buttons">';
+            html += '<button class="btn btn-info" onclick="exportToCSV()">📥 دانلود CSV</button>';
+            html += '<button class="btn btn-info" onclick="exportToText()">📄 دانلود TXT</button>';
+            html += '<button class="btn btn-secondary" onclick="copyToClipboard()">📋 کپی به کلیپبورد</button>';
+            html += '</div>';
+
+            html += '</div>';
+
+            document.getElementById('batch-result').innerHTML = html;
+
+            window.batchResults = results;
+        }
+
+        // Export functions
+        function exportToCSV() {
+            if (!window.batchResults) return;
+
+            let csv = '\ufeffردیف,سیگنال,غلظت,وضعیت\n';
+            csv += '# JooyaCal Pro - Developed by Dr. Jooya\n';
+            window.batchResults.forEach(r => {
+                csv += `${r.index},${r.signal.toFixed(6)},${r.valid ? r.concentration.toFixed(6) : 'N/A'},${r.valid ? 'موفق' : 'خارج از محدوده'}\n`;
+            });
+
+            downloadFile(csv, 'jooyacal_results.csv', 'text/csv');
+        }
+
+        function exportToText() {
+            if (!window.batchResults) return;
+
+            let txt = '═══════════════════════════════════════\n';
+            txt += '   JooyaCal Pro v2.0\n';
+            txt += '   Developed by Dr. Jooya\n';
+            txt += '═══════════════════════════════════════\n\n';
+            txt += 'نتایج محاسبات منحنی کالیبراسیون\n';
+            txt += '-------------------------------------\n\n';
+            
+            window.batchResults.forEach(r => {
+                txt += `ردیف ${r.index}:\n`;
+                txt += `  سیگنال: ${r.signal.toFixed(6)}\n`;
+                txt += `  غلظت: ${r.valid ? r.concentration.toFixed(6) : 'خارج از محدوده'}\n`;
+                txt += `  وضعیت: ${r.valid ? '✅ موفق' : '❌ ناموفق'}\n\n`;
+            });
+
+            txt += '\n═══════════════════════════════════════\n';
+            txt += '© 2025 Dr. Jooya - All Rights Reserved\n';
+            txt += '═══════════════════════════════════════\n';
+
+            downloadFile(txt, 'jooyacal_results.txt', 'text/plain');
+        }
+
+        function copyToClipboard() {
+            if (!window.batchResults) return;
+
+            let text = 'JooyaCal Pro by Dr. Jooya\n';
+            text += 'ردیف\tسیگنال\tغلظت\tوضعیت\n';
+            window.batchResults.forEach(r => {
+                text += `${r.index}\t${r.signal.toFixed(6)}\t${r.valid ? r.concentration.toFixed(6) : 'N/A'}\t${r.valid ? 'موفق' : 'ناموفق'}\n`;
+            });
+
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✅ نتایج به کلیپبورد کپی شد!');
+            }).catch(() => {
+                alert('❌ خطا در کپی کردن!');
+            });
+        }
+
+        function downloadFile(content, filename, type) {
+            const blob = new Blob([content], { type: type + ';charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
+        // حل عددی معادله
+        function solvePL(targetY, params, func) {
+            const xData = dataPoints.map(p => p.x);
+            let left = Math.min(...xData) * 0.1;
+            let right = Math.max(...xData) * 10;
+
+            const tolerance = 1e-8;
+            const maxIter = 100;
+
+            for (let i = 0; i < maxIter; i++) {
+                const mid = (left + right) / 2;
+                const yMid = func(mid, ...params);
+
+                if (Math.abs(yMid - targetY) < tolerance) {
+                    return mid;
+                }
+
+                const yLeft = func(left, ...params);
+                if ((yLeft - targetY) * (yMid - targetY) < 0) {
+                    right = mid;
+                } else {
+                    left = mid;
+                }
+
+                if (Math.abs(right - left) < tolerance) {
+                    return (left + right) / 2;
+                }
+            }
+
+            return (left + right) / 2;
+        }
+
+        // پاک کردن همه چیز
+        function clearAll() {
+            document.getElementById('data-inputs').innerHTML = '';
+            for (let i = 0; i < 4; i++) {
+                addDataPoint();
+            }
+            
+            if (chart) {
+                chart.destroy();
+                chart = null;
+            }
+            
+            document.getElementById('chart-container').style.display = 'none';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('predict-section').style.display = 'none';
+            document.getElementById('adjustment-section').style.display = 'none';
+            document.getElementById('adjusted-results').style.display = 'none';
+            
+            document.getElementById('new-signal').value = '';
+            document.getElementById('batch-signals').value = '';
+            document.getElementById('predict-result').innerHTML = '';
+            document.getElementById('batch-result').innerHTML = '';
+            
+            document.getElementById('cal1-conc').value = '';
+            document.getElementById('cal1-signal').value = '';
+            document.getElementById('cal1-predicted').value = '';
+            document.getElementById('cal2-conc').value = '';
+            document.getElementById('cal2-signal').value = '';
+            document.getElementById('cal2-predicted').value = '';
+            
+            dataPoints = [];
+            fittedParams = null;
+            adjustedParams = null;
+            splineCoefficients = null;
+            window.batchResults = null;
+            isAdjusted = false;
+        }
+
+        // ثبت Service Worker برای PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>
